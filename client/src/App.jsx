@@ -1,11 +1,22 @@
 import "./App.css";
+import LoginPage from "./pages/LoginPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Room from "./pages/Room";
-
+import PrivateRoutes from "./components/PrivateRoutes";
+import { AuthProvider } from "./utils/AuthContext";
 function App() {
   return (
-    <>
-      <Room />
-    </>
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          
+          <Route element={<PrivateRoutes />}>
+            <Route path="/" element={<Room />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
 }
 
