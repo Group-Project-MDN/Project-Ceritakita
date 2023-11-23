@@ -55,9 +55,7 @@ const Room = () => {
       body: messageBody,
     };
 
-    let permissions = [
-      Permission.write(Role.user(user.$id))
-    ]
+    let permissions = [Permission.write(Role.user(user.$id))];
 
     let response = await databases.createDocument(
       DATABASE_ID,
@@ -118,22 +116,24 @@ const Room = () => {
                   <p>
                     {message?.username ? (
                       <span>{message.username}</span>
-                    ): (
+                    ) : (
                       <span>Anonymous User</span>
                     )}
                     <small className="message-timestamp">
-                    {new Date(message.$createdAt).toLocaleString()}
-                  </small>
+                      {new Date(message.$createdAt).toLocaleString()}
+                    </small>
                   </p>
 
-                    {message.$permissions.includes(`delete(\"user:${user.$id}\")`) && (
-                        <Trash2
-                        className="delete--btn"
-                        onClick={() => {
-                          deleteMessage(message.$id);
-                        }}
-                      />
-                    )}
+                  {message.$permissions.includes(
+                    `delete(\"user:${user.$id}\")`
+                  ) && (
+                    <Trash2
+                      className="delete--btn"
+                      onClick={() => {
+                        deleteMessage(message.$id);
+                      }}
+                    />
+                  )}
                 </div>
 
                 <div className="message--body">
